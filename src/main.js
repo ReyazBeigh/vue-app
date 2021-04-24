@@ -1,5 +1,8 @@
-import { createApp } from "vue";
+import { createApp, reactive} from "vue";
 import App from "./App.vue";
+import store from "./store"
 import router from "./router";
+import 'nprogress/nprogress.css'  
 
-createApp(App).use(router).mount("#app");
+const GlobalStorage = reactive({flashMessage:''});
+createApp(App).use(router).use(store).provide('GlobalStorage',GlobalStorage).mount("#app");
