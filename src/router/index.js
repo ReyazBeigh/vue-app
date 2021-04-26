@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Events from "../views/Events.vue";
+import LoginUser from "../views/LoginUser.vue";
+import RegisterUser from "../views/RegisterUser.vue";
 import EventLayout from "../views/event/Layout.vue";
 import EventCreate from "../views/event/Create.vue";
 import EventDetails from "../views/event/Details.vue";
@@ -20,6 +22,18 @@ const routes = [
     path: "/create/event",
     name: "CreateEvent",
     component: EventCreate,
+    meta: { requiresAuth: true }
+  },
+
+  {
+    path: "/user/register",
+    name: "RegisterUser",
+    component: RegisterUser,
+  },
+  {
+    path: "/user/login",
+    name: "LoginUser",
+    component: LoginUser,
   },
   {
     path: "/event/:id",
@@ -35,7 +49,7 @@ const routes = [
       {
         path: "/event/:id/register",
         name: "EventRegister",
-        component: EventRegister,
+        component: EventRegister
       },
       {
         path: "/event/:id/edit",
@@ -73,5 +87,12 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+router.beforeEach((to) => {
+
+  const loggedIn = localStorage.getItem('user');
+  if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+    return { 'name': 'LoginUser' }
+  }
+})
 
 export default router;

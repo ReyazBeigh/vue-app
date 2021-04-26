@@ -15,9 +15,9 @@ export default {
     register() {
       this.GlobalStorage.flashMessage =
         "You are Sucessfully Registered for " + this.event.title;
-        setTimeout(()=>{
-            this.GlobalStorage.flashMessage = ""
-        },3000)
+      setTimeout(() => {
+        this.GlobalStorage.flashMessage = "";
+      }, 3000);
       this.$router.replace({
         name: "EventDetails",
         id: this.event.id,
